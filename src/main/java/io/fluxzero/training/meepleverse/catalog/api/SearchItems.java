@@ -1,5 +1,6 @@
 package io.fluxzero.training.meepleverse.catalog.api;
 
+import io.fluxzero.common.api.search.FacetStats;
 import io.fluxzero.common.api.search.constraints.ContainsConstraint;
 import io.fluxzero.sdk.Fluxzero;
 import io.fluxzero.sdk.tracking.handling.HandleQuery;
@@ -11,6 +12,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public record SearchItems(String term, String category) implements Request<SearchItems.Result> {
+    private static final String CATEGORY_FACET = "details/category";
+
     public SearchItems() {
         this(null);
     }
@@ -27,16 +30,16 @@ public record SearchItems(String term, String category) implements Request<Searc
         if (term != null && !term.isBlank()) {
             search = search.constraint(ContainsConstraint.contains(term.strip(), true, true, "details/name"));
         }
-        var matches = search.fetchAll(Item.class);
         Map<String, Integer> counts = new TreeMap<>();
-        for (var item : matches) {
-            var label = item.details().category();
-            if (label != null && !label.isBlank()) {
-                counts.merge(label, 1, Integer::sum);
+        for (FacetStats facet : search.facetStats()) {
+            if (CATEGORY_FACET.equals(facet.getName())) {
+                counts.put(facet.getValue(), facet.getCount());
             }
         }
-        var items = category == null || category.isBlank() ? matches : matches.stream()
-                .filter(item -> category.equals(item.details().category())).toList();
+        if (category != null && !category.isBlank()) {
+            search = search.matchFacet(CATEGORY_FACET, category);
+        }
+        var items = search.fetchAll(Item.class);
         return new Result(items, counts);
     }
 }
