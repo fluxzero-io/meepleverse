@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.1.2</version>
+		<version>4.2.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>io.fluxzero.training</groupId>
@@ -15,7 +15,7 @@
 	<description>An e-commerce webapp for board games.</description>
 	<properties>
 		<java.version>25</java.version>
-		<fluxzero.version>1.292.49</fluxzero.version>
+		<fluxzero.version>1.292.71</fluxzero.version>
 		<!-- Align shared libraries with the SDK 1.x BOM. -->
 		<jackson-2-bom.version>2.22.4</jackson-2-bom.version>
 		<junit-jupiter.version>6.1.3</junit-jupiter.version>
@@ -183,7 +183,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
-				<version>3.6.4</version>
+				<version>3.7.0</version>
 				<configuration>
 					<mainClass>io.fluxzero.training.meepleverse.Meepleverse</mainClass>
 					<includePluginDependencies>false</includePluginDependencies>
