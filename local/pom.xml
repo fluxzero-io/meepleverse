@@ -21,7 +21,7 @@
         <dependency>
             <groupId>io.fluxzero</groupId>
             <artifactId>sdk</artifactId>
-            <version>1.292.49</version>
+            <version>1.292.71</version>
             <type>pom</type>
             <exclusions>
                 <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
